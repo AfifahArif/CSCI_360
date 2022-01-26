@@ -1,0 +1,437 @@
+                   J E S 2  J O B  L O G  --  S Y S T E M  2 9 6 4  --  N O D E  S V S C J E S 2
+ 
+00.36.07 JOB08197 ---- FRIDAY, 13 MAR 2020 ----
+00.36.07 JOB08197  IRR010I  USERID KC03D76 IS ASSIGNED TO THIS JOB.
+00.36.07 JOB08197  ICH70001I KC03D76 LAST ACCESS AT 00:34:02 ON FRIDAY, MARCH 13, 2020
+00.36.07 JOB08197  $HASP373 KC03D76A STARTED - INIT 2    - CLASS A        - SYS 2964
+00.36.07 JOB08197  $HASP395 KC03D76A ENDED - RC=0000
+------ JES2 JOB STATISTICS ------
+  24 JUL 2020 JOB EXECUTION DATE
+          182 CARDS READ
+          272 SYSOUT PRINT RECORDS
+            0 SYSOUT PUNCH RECORDS
+           26 SYSOUT SPOOL KBYTES
+         0.00 MINUTES EXECUTION TIME
+        1 //KC03D76A JOB ,'AFIFAH ARIF',MSGCLASS=H                                JOB08197
+        2 //JSTEP01  EXEC PGM=ASSIST
+        3 //STEPLIB  DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR
+        4 //SYSPRINT DD SYSOUT=*
+        5 //SYSIN    DD *
+          //*
+        6 //FT05F001 DD DSN=KC02293.CSCI360.DATASU20(DATA5),DISP=SHR
+          //*
+        7 //FT065001 DD SYSOUT=*
+          //*
+        8 //SYSPRINT DD SYSOUT=*
+        9 //
+ICH70001I KC03D76 LAST ACCESS AT 00:34:02 ON FRIDAY, MARCH 13, 2020
+IEFA111I KC03D76A IS USING THE FOLLOWING JOB RELATED SETTINGS:
+         SWA=ABOVE,TIOT SIZE=32K,DSENQSHR=DISALLOW,GDGBIAS=JOB
+IEF236I ALLOC. FOR KC03D76A JSTEP01
+IGD103I SMS ALLOCATED TO DDNAME STEPLIB
+IEF237I JES2 ALLOCATED TO SYSPRINT
+IEF237I JES2 ALLOCATED TO SYSIN
+IGD103I SMS ALLOCATED TO DDNAME FT05F001
+IEF237I JES2 ALLOCATED TO FT065001
+IEF237I JES2 ALLOCATED TO SYSPRINT
+IEF142I KC03D76A JSTEP01 - STEP WAS EXECUTED - COND CODE 0000
+IGD104I KC02293.ASSIST.LOADLIB                       RETAINED,  DDNAME=STEPLIB
+IEF285I KC03D76.KC03D76A.JOB08197.D0000102.?         SYSOUT
+IEF285I KC03D76.KC03D76A.JOB08197.D0000101.?         SYSIN
+IGD104I KC02293.CSCI360.DATASU20                     RETAINED,  DDNAME=FT05F001
+IEF285I  KC03D76.KC03D76A.JOB08197.D0000103.?         SYSOUT
+IEF285I  KC03D76.KC03D76A.JOB08197.D0000104.?         SYSOUT
+IEF373I STEP/JSTEP01 /START 2020206.0036
+IEF032I STEP/JSTEP01 /STOP  2020206.0036
+        CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+        VIRT:   584K  SYS:   248K  EXT:        0K  SYS:    12220K
+        ATB- REAL:                  4128K  SLOTS:                     0K
+             VIRT- ALLOC:      13M SHRD:       0M
+IEF375I  JOB/KC03C98A/START 2020206.0036
+IEF033I  JOB/KC03C98A/STOP  2020206.0036
+        CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+******************************************************************
+*                                                                *
+*  CSCI 360               ASSIGNMENT 6              SPRING 2020  *
+*                                                                *
+*  DATE DUE:  03/13/2020                                         *
+*  TIME DUE:  11:59 PM                                           *
+*                                                                *
+*  REGISTERS:                                                    *
+*        1 -                                                     *
+*        2 - NPTOTAL                                             *
+*        3 - RATE                                                *
+*        4 - HOURS                                               *
+*        5 - DEDUCTIONS                                          *
+*        6 - BONUSES                                             *
+*        7 - WITHOLD PERCENTAGE(TEMP)                            *
+*        8 - ECOUNT                                              *
+*        9 - GPTOTAL                                             *
+*       10 - CALCULATIONS                                        *
+*       11 - WITHHOLD AMOUNT                                     *
+*       12 - CALCULATIONS                                        *
+*       13 - GPAY(TEMP), NPAY                                    *
+*       14 - RETURN REGISTER                                     *
+*       15 - BASE REGISTER                                       *
+******************************************************************
+*
+*        COL. 10
+*        |     COL. 16
+*        |     |
+*        v     v
+PAYROLL1 CSECT
+         USING PAYROLL1,15     ESTABLISH ADDRESSABILITY ON REG 15
+*INITIALIZE AND SET RUNNING TOTAL REGISTERS
+         SR    2,2             SET R2 TO 0. PURPOSE: NPTOTAL
+         SR    8,8             SET R8 TO 0. PURPOSE: EMPLOYEE COUNTER
+         SR    9,9             SET R9 TO 0. PURPOSE: TOTAL GPAY
+*
+         XREAD BUFFER,80       READ WITHHOLDING PERCENT
+         XDECI 7,BUFFER        PULL WITHHOLDING PERCENT
+*
+         XREAD BUFFER,80       BEGIN READING RECORDS
+*
+LOOP1    BC    B'0100',ENDLOOP1
+         LA    8,1(,8)         ADD 1 TO ECOUNTER FOR EVERY LINE READ
+*BEGIN PULLING RECORDS, CONVERTING THEM & GETTING READY FOR PRINT LINE
+         MVC   NAME(25),BUFFER PULL NAME FROM RECORDS
+*
+         MVC   ID(6),BUFFER+25 PULL ID FROM RECORDS
+*
+         XDECI 3,BUFFER+31     CONVERT & MOVE RATE FROM REC TO R3
+         XDECO 3,RATE          CONVERT & MOVE RATE INTO PRINT LINE
+*
+         XDECI 4,0(,1)         CONVERT & MOVE HOURS FROM REC TO R4
+         XDECO 4,HOURS         CONVERT & MOVE HOURS INTO PRINT LINE
+*
+         XDECI 5,0(,1)         CONVERT & MOVE DEDUCT FROM REC TO R5
+         XDECO 5,DEDUCT        CONVERT & MOVE DEDUCT INTO PRINT LINE
+*
+         XDECI 6,0(,1)         CONVERT & MOVE BONUS FROM REC TO R6
+         XDECO 6,BONUS         CONVERT & MOVE BONUS INTO PRINT LINE
+*EMPLOYEE GROSS PAY(13) = RATE(3)*HOURS(4)-DEDUCTIONS(5)+BONUSES(6)
+         LR    11,3            LOAD RATE INTO R11 (TEMP)
+         LR    13,4            LOAD HOURS INTO R13
+         MR    12,11           MULTIPLICATION (RATE*HOURS)
+         SR    13,5            SUBTRACT DEDUCTIONS FROM TOTAL SO FAR
+         AR    13,6            ADD BONUS TO TOTAL SO FAR
+         XDECO 13,GPAY         CONVERT AND MOVE GPAY INTO PRINT LINE
+*TOTAL GROSS PAY(9) += 13
+         AR    9,13            ADD INDIVIDUAL GROSS PAY TO RUNNING TOT
+*WITHHOLDING AMOUNT(11) = GPAY(13) * WITHHOLDING(7) / 100
+         SR    10,10           SET R10 TO 0. PURPOSE: CALCULATIONS
+         SR    11,11           SET R11 TO 0. PURPOSE: CALCULATIONS
+*
+         LR    11,13           LOAD GPAY INTO R11
+         MR    10,7            GPAY*WITHHOLDING AMT
+         D     10,=F'100'      DIVIDE TOTAL BY 100
+         XDECO 11,WHOLD        CONVERT AND MOVE WHOLD INTO PRINT LINE
+*WTOTAL(12) += 11
+         AR    12,11           ADD INDIVIDUAL WHOLD AMOUNTS
+*NETPAY AMOUNT(13) = GPAY(13) - WITHHOLDING AMOUNT(11)
+         SR    13,11           SUBTRACT GROSS PAY BY WITHHOLDING AMOUNT
+         XDECO 13,NPAY         CONVERT AND MOVE NPAY INTO PRINT LINE
+*TOTAL NETPAY (2) = NPAY(13)
+         AR    2,13            ADD INDIVIDUAL NET PAY TO RUNNING TOT
+*
+         XPRNT LINE1,133       PRINT OUTPUT FROM RECORDS
+         XREAD BUFFER,80       READ NEXT RECORD
+         BC    B'1111',LOOP1   IF MORE RECORDS, BEGIN LOOP
+ENDLOOP1 XDECO 8,ECOUNT        COUNT EVERY RECORD AS ONE EMPLOYEE
+         XPRNT LINE2,133       PRINT EMPLOYEE OUTPUT
+*PRINT DTOTAL
+         XDECO 3,DTOTAL       CONVERT AND MOVE GPAY TOT INTO PRNTLINE
+         XPRNT LINE3,133       PRINT GROSS TOTAL OUTPUT
+*PRINT BTOTAL
+         XDECO 3,BTOTAL       CONVERT AND MOVE GPAY TOT INTO PRNTLINE
+         XPRNT LINE4,133       PRINT GROSS TOTAL OUTPUT
+*PRINT GPTOTAL
+         XDECO 9,GPTOTAL       CONVERT AND MOVE GPAY TOT INTO PRNTLINE
+         XPRNT LINE5,133       PRINT GROSS TOTAL OUTPUT
+*PRINT WTOTAL
+         XDECO 12,WTOTAL       CONVERT AND MOVE WHOLD TOT INTO PRNTLINE
+         XPRNT LINE6,133       PRINT WHOLD TOTAL OUTPUT
+*PRINT NPTOTAL
+         XDECO 2,NPTOTAL      CONVERT AND MOVE WHOLD TOT INTO PRNTLINE
+         XPRNT LINE7,133       PRINT WHOLD TOTAL OUTPUT
+*
+         BR    14              RETURN TO PROGRAM
+*
+         LTORG                 LITERAL ORGANIZATION
+*INPUT STORAGE
+BUFFER   DS    CL80            RECORD BUFFER
+*OUTPUT STORAGE
+LINE1    DC    C'0'            CARRIAGE CONTROL
+         DC    4C' '           SPACES
+NAME     DS    CL25            NAME STORAGE
+         DC    4C' '           SPACES
+ID       DS    CL6             ID STORAGE
+         DC    4C' '           SPACES
+RATE     DS    CL8             RATE STORAGE
+         DC    4C' '           SPACES
+HOURS    DS    CL8             HOURS STORAGE
+         DC    4C' '           SPACES
+DEDUCT   DS    CL8             DEDUCTION STORAGE
+         DC    4C' '           SPACES
+BONUS    DS    CL8             BONUS STORAGE
+         DC    4C' '           SPACES
+GPAY     DS    CL8             GROSS PAY STORAGE
+         DC    4C' '           SPACES
+WHOLD    DS    CL10            WITHHOLDING AMOUNT STORAGE
+         DC    7C' '           SPACES
+NPAY     DS    CL8             NET PAY STORAGE
+         DS    4C' '           SPACES
+*
+LINE2    DC    C'0'            CARRIAGE CONTROL
+         DC    26C' '          SPACES
+         DC    C'TOTAL EMPLOYEE COUNT: '    EMPLOYEE COUNT WILL GO HERE
+ECOUNT   DS    CL10            EMPLOYEE COUNTER STORAGE
+         DC    97C' '          SPACES
+*
+LINE3    DC    C'0'            CARRIAGE CONTROL
+         DC    26C' '          SPACES
+         DC    C'TOTAL DEDUCTIONS: '    TOTAL DEDUCTIONS WILL GO HERE
+DTOTAL   DS    CL12            TOTAL DEDUCTION STORAGE
+         DC    95C' '          SPACES
+*
+LINE4    DC    C'0'            CARRIAGE CONTROL
+         DC    26C' '          SPACES
+         DC    C'TOTAL BONUSES: '    TOTAL BONUSES WILL GO HERE
+BTOTAL   DS    CL12            TOTAL BONUSES STORAGE
+         DC    95C' '          SPACES
+*
+LINE5    DC    C'0'            CARRIAGE CONTROL
+         DC    26C' '          SPACES
+         DC    C'TOTAL GROSS PAY: '    TOTAL GROSS PAY WILL GO HERE
+GPTOTAL  DS    CL10            TOTAL GROSS PAY STORAGE
+         DC    97C' '          SPACES
+*
+LINE6    DC    C'0'            CARRIAGE CONTROL
+         DC    26C' '          SPACES
+         DC    C'TOTAL WITHHOLDING: '    TOTAL WITHHOLDING WILL GO HERE
+WTOTAL   DS    CL12            TOTAL WITHHOLDING STORAGE
+         DC    95C' '          SPACES
+*
+LINE7    DC    C'0'            CARRIAGE CONTROL
+         DC    26C' '          SPACES
+         DC    C'TOTAL NET PAY: '    TOTAL NET PAY WILL GO HERE
+NPTOTAL  DS    CL12            TOTAL NET PAY STORAGE
+         DC    95C' '          SPACES
+*
+         END   PAYROLL1        END PROGRAM
+*** ASSIST 4.0/A2-05/15/82  470/V7A/0:OS/VS2  INS=SDFP7/X=BGHO, CHECK/TRC/=1180, OPTS=CDKMPR FROM PENN ST*NIU COMPSCI*LT
+ 
+                                                                                                               PAGE    1
+  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT
+                                      1 ******************************************************************
+                                      2 *                                                                *
+                                      3 *  CSCI 360               ASSIGNMENT 6              SPRING 2020  *
+                                      4 *                                                                *
+                                      5 *  DATE DUE:  03/13/2020                                         *
+                                      6 *  TIME DUE:  11:59 PM                                           *
+                                      7 *                                                                *
+                                      8 *  REGISTERS:                                                    *
+                                      9 *        1 -                                                     *
+                                     10 *        2 - NPTOTAL                                             *
+                                     11 *        3 - RATE                                                *
+                                     12 *        4 - HOURS                                               *
+                                     13 *        5 - DEDUCTIONS                                          *
+                                     14 *        6 - BONUSES                                             *
+                                     15 *        7 - WITHOLD PERCENTAGE(TEMP)                            *
+                                     16 *        8 - ECOUNT                                              *
+                                     17 *        9 - GPTOTAL                                             *
+                                     18 *       10 - CALCULATIONS                                        *
+                                     19 *       11 - WITHHOLD AMOUNT                                     *
+                                     20 *       12 - CALCULATIONS                                        *
+                                     21 *       13 - GPAY(TEMP), NPAY                                    *
+                                     22 *       14 - RETURN REGISTER                                     *
+                                     23 *       15 - BASE REGISTER                                       *
+                                     24 ******************************************************************
+                                     25 *
+                                     26 *        COL. 10
+                                     27 *        |     COL. 16
+                                     28 *        |     |
+                                     29 *        v     v
+000000                               30 PAYROLL1 CSECT
+000000                               31          USING PAYROLL1,15     ESTABLISH ADDRESSABILITY ON REG 15
+                                     32 *INITIALIZE AND SET RUNNING TOTAL REGISTERS
+000000 1B22                          33          SR    2,2             SET R2 TO 0. PURPOSE: NPTOTAL
+000002 1B88                          34          SR    8,8             SET R8 TO 0. PURPOSE: EMPLOYEE COUNTER
+000004 1B99                          35          SR    9,9             SET R9 TO 0. PURPOSE: TOTAL GPAY
+                                     36 *
+000006 E000 F0CC 0050 000CC          37          XREAD BUFFER,80       READ WITHHOLDING PERCENT
+00000C 5370 F0CC            000CC    38          XDECI 7,BUFFER        PULL WITHHOLDING PERCENT
+                                     39 *
+000010 E000 F0CC 0050 000CC          40          XREAD BUFFER,80       BEGIN READING RECORDS
+                                     41 *
+000016 4740 F084            00084    42 LOOP1    BC    B'0100',ENDLOOP1
+00001A 4180 8001            00001    43          LA    8,1(,8)         ADD 1 TO ECOUNTER FOR EVERY LINE READ
+                                     44 *BEGIN PULLING RECORDS, CONVERTING THEM & GETTING READY FOR PRINT LINE
+00001E D218 F121 F0CC 00121 000CC    45          MVC   NAME(25),BUFFER PULL NAME FROM RECORDS
+                                     46 *
+000024 D205 F13E F0E5 0013E 000E5    47          MVC   ID(6),BUFFER+25 PULL ID FROM RECORDS
+                                     48 *
+00002A 5330 F0EB            000EB    49          XDECI 3,BUFFER+31     CONVERT & MOVE RATE FROM REC TO R3
+00002E 5230 F148            00148    50          XDECO 3,RATE          CONVERT & MOVE RATE INTO PRINT LINE
+                                     51 *
+000032 5340 1000            00000    52          XDECI 4,0(,1)         CONVERT & MOVE HOURS FROM REC TO R4
+                                                                                                               PAGE    2
+  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT
+000036 5240 F154            00154    53          XDECO 4,HOURS         CONVERT & MOVE HOURS INTO PRINT LINE
+                                     54 *
+00003A 5350 1000            00000    55          XDECI 5,0(,1)         CONVERT & MOVE DEDUCT FROM REC TO R5
+00003E 5250 F160            00160    56          XDECO 5,DEDUCT        CONVERT & MOVE DEDUCT INTO PRINT LINE
+                                     57 *
+000042 5360 1000            00000    58          XDECI 6,0(,1)         CONVERT & MOVE BONUS FROM REC TO R6
+000046 5260 F16C            0016C    59          XDECO 6,BONUS         CONVERT & MOVE BONUS INTO PRINT LINE
+                                     60 *EMPLOYEE GROSS PAY(13) = RATE(3)*HOURS(4)-DEDUCTIONS(5)+BONUSES(6)
+00004A 18B3                          61          LR    11,3            LOAD RATE INTO R11 (TEMP)
+00004C 18D4                          62          LR    13,4            LOAD HOURS INTO R13
+00004E 1CCB                          63          MR    12,11           MULTIPLICATION (RATE*HOURS)
+000050 1BD5                          64          SR    13,5            SUBTRACT DEDUCTIONS FROM TOTAL SO FAR
+000052 1AD6                          65          AR    13,6            ADD BONUS TO TOTAL SO FAR
+000054 52D0 F178            00178    66          XDECO 13,GPAY         CONVERT AND MOVE GPAY INTO PRINT LINE
+                                     67 *TOTAL GROSS PAY(9) += 13
+000058 1A9D                          68          AR    9,13            ADD INDIVIDUAL GROSS PAY TO RUNNING TOT
+                                     69 *WITHHOLDING AMOUNT(11) = GPAY(13) * WITHHOLDING(7) / 100
+00005A 1BAA                          70          SR    10,10           SET R10 TO 0. PURPOSE: CALCULATIONS
+00005C 1BBB                          71          SR    11,11           SET R11 TO 0. PURPOSE: CALCULATIONS
+                                     72 *
+00005E 18BD                          73          LR    11,13           LOAD GPAY INTO R11
+000060 1CA7                          74          MR    10,7            GPAY*WITHHOLDING AMT
+000062 5DA0 F0C8            000C8    75          D     10,=F'100'      DIVIDE TOTAL BY 100
+000066 52B0 F184            00184    76          XDECO 11,WHOLD        CONVERT AND MOVE WHOLD INTO PRINT LINE
+                                     77 *WTOTAL(12) += 11
+00006A 1ACB                          78          AR    12,11           ADD INDIVIDUAL WHOLD AMOUNTS
+                                     79 *NETPAY AMOUNT(13) = GPAY(13) - WITHHOLDING AMOUNT(11)
+00006C 1BDB                          80          SR    13,11           SUBTRACT GROSS PAY BY WITHHOLDING AMOUNT
+00006E 52D0 F195            00195    81          XDECO 13,NPAY         CONVERT AND MOVE NPAY INTO PRINT LINE
+                                     82 *TOTAL NETPAY (2) = NPAY(13)
+000072 1A2D                          83          AR    2,13            ADD INDIVIDUAL NET PAY TO RUNNING TOT
+                                     84 *
+000074 E020 F11C 0085 0011C          85          XPRNT LINE1,133       PRINT OUTPUT FROM RECORDS
+00007A E000 F0CC 0050 000CC          86          XREAD BUFFER,80       READ NEXT RECORD
+000080 47F0 F016            00016    87          BC    B'1111',LOOP1   IF MORE RECORDS, BEGIN LOOP
+000084 5280 F1D2            001D2    88 ENDLOOP1 XDECO 8,ECOUNT        COUNT EVERY RECORD AS ONE EMPLOYEE
+000088 E020 F1A1 0085 001A1          89          XPRNT LINE2,133       PRINT EMPLOYEE OUTPUT
+                                     90 *PRINT DTOTAL
+00008E 5230 F26A            0026A    91          XDECO 3,DTOTAL       CONVERT AND MOVE GPAY TOT INTO PRNTLINE
+000092 E020 F23D 0085 0023D          92          XPRNT LINE3,133       PRINT GROSS TOTAL OUTPUT
+                                     93 *PRINT BTOTAL
+000098 5230 F2FF            002FF    94          XDECO 3,BTOTAL       CONVERT AND MOVE GPAY TOT INTO PRNTLINE
+00009C E020 F2D5 0085 002D5          95          XPRNT LINE4,133       PRINT GROSS TOTAL OUTPUT
+                                     96 *PRINT GPTOTAL
+0000A2 5290 F396            00396    97          XDECO 9,GPTOTAL       CONVERT AND MOVE GPAY TOT INTO PRNTLINE
+0000A6 E020 F36A 0085 0036A          98          XPRNT LINE5,133       PRINT GROSS TOTAL OUTPUT
+                                     99 *PRINT WTOTAL
+0000AC 52C0 F42F            0042F   100          XDECO 12,WTOTAL       CONVERT AND MOVE WHOLD TOT INTO PRNTLINE
+0000B0 E020 F401 0085 00401         101          XPRNT LINE6,133       PRINT WHOLD TOTAL OUTPUT
+                                    102 *PRINT NPTOTAL
+0000B6 5220 F4C4            004C4   103          XDECO 2,NPTOTAL      CONVERT AND MOVE WHOLD TOT INTO PRNTLINE
+0000BA E020 F49A 0085 0049A         104          XPRNT LINE7,133       PRINT WHOLD TOTAL OUTPUT
+                                    105 *
+0000C0 07FE                         106          BR    14              RETURN TO PROGRAM
+                                    107 *
+                                    108          LTORG                 LITERAL ORGANIZATION
+0000C8 00000064                     109                =F'100'
+                                                                                                               PAGE    3
+  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT
+                                    110 *INPUT STORAGE
+0000CC                              111 BUFFER   DS    CL80            RECORD BUFFER
+                                    112 *OUTPUT STORAGE
+00011C F0                           113 LINE1    DC    C'0'            CARRIAGE CONTROL
+00011D 40404040                     114          DC    4C' '           SPACES
+000121                              115 NAME     DS    CL25            NAME STORAGE
+00013A 40404040                     116          DC    4C' '           SPACES
+00013E                              117 ID       DS    CL6             ID STORAGE
+000144 40404040                     118          DC    4C' '           SPACES
+000148                              119 RATE     DS    CL8             RATE STORAGE
+000150 40404040                     120          DC    4C' '           SPACES
+000154                              121 HOURS    DS    CL8             HOURS STORAGE
+00015C 40404040                     122          DC    4C' '           SPACES
+000160                              123 DEDUCT   DS    CL8             DEDUCTION STORAGE
+000168 40404040                     124          DC    4C' '           SPACES
+00016C                              125 BONUS    DS    CL8             BONUS STORAGE
+000174 40404040                     126          DC    4C' '           SPACES
+000178                              127 GPAY     DS    CL8             GROSS PAY STORAGE
+000180 40404040                     128          DC    4C' '           SPACES
+000184                              129 WHOLD    DS    CL10            WITHHOLDING AMOUNT STORAGE
+00018E 40404040404040               130          DC    7C' '           SPACES
+000195                              131 NPAY     DS    CL8             NET PAY STORAGE
+00019D                              132          DS    4C' '           SPACES
+                                    133 *
+0001A1 F0                           134 LINE2    DC    C'0'            CARRIAGE CONTROL
+0001A2 4040404040404040             135          DC    26C' '          SPACES
+0001BC E3D6E3C1D340C5D4             136          DC    C'TOTAL EMPLOYEE COUNT: '    EMPLOYEE COUNT WILL GO HERE
+0001D2                              137 ECOUNT   DS    CL10            EMPLOYEE COUNTER STORAGE
+0001DC 4040404040404040             138          DC    97C' '          SPACES
+                                    139 *
+00023D F0                           140 LINE3    DC    C'0'            CARRIAGE CONTROL
+00023E 4040404040404040             141          DC    26C' '          SPACES
+000258 E3D6E3C1D340C4C5             142          DC    C'TOTAL DEDUCTIONS: '    TOTAL DEDUCTIONS WILL GO HERE
+00026A                              143 DTOTAL   DS    CL12            TOTAL DEDUCTION STORAGE
+000276 4040404040404040             144          DC    95C' '          SPACES
+                                    145 *
+0002D5 F0                           146 LINE4    DC    C'0'            CARRIAGE CONTROL
+0002D6 4040404040404040             147          DC    26C' '          SPACES
+0002F0 E3D6E3C1D340C2D6             148          DC    C'TOTAL BONUSES: '    TOTAL BONUSES WILL GO HERE
+0002FF                              149 BTOTAL   DS    CL12            TOTAL BONUSES STORAGE
+00030B 4040404040404040             150          DC    95C' '          SPACES
+                                    151 *
+00036A F0                           152 LINE5    DC    C'0'            CARRIAGE CONTROL
+00036B 4040404040404040             153          DC    26C' '          SPACES
+000385 E3D6E3C1D340C7D9             154          DC    C'TOTAL GROSS PAY: '    TOTAL GROSS PAY WILL GO HERE
+000396                              155 GPTOTAL  DS    CL10            TOTAL GROSS PAY STORAGE
+0003A0 4040404040404040             156          DC    97C' '          SPACES
+                                    157 *
+000401 F0                           158 LINE6    DC    C'0'            CARRIAGE CONTROL
+000402 4040404040404040             159          DC    26C' '          SPACES
+00041C E3D6E3C1D340E6C9             160          DC    C'TOTAL WITHHOLDING: '    TOTAL WITHHOLDING WILL GO HERE
+00042F                              161 WTOTAL   DS    CL12            TOTAL WITHHOLDING STORAGE
+00043B 4040404040404040             162          DC    95C' '          SPACES
+                                    163 *
+00049A F0                           164 LINE7    DC    C'0'            CARRIAGE CONTROL
+00049B 4040404040404040             165          DC    26C' '          SPACES
+0004B5 E3D6E3C1D340D5C5             166          DC    C'TOTAL NET PAY: '    TOTAL NET PAY WILL GO HERE
+                                                                                                               PAGE    4
+  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT
+0004C4                              167 NPTOTAL  DS    CL12            TOTAL NET PAY STORAGE
+0004D0 4040404040404040             168          DC    95C' '          SPACES
+                                    169 *
+                                    170          END   PAYROLL1        END PROGRAM
+***  NO   STATEMENTS FLAGGED -  NO   WARNINGS,  NO   ERRORS
+*** DYNAMIC CORE AREA USED:  LOW:    8464 HIGH:     852 LEAVING:  484252 FREE BYTES. AVERAGE:       54 BYTES/STMT ***
+*** ASSEMBLY TIME =    0.000 SECS,   171000 STATEMENTS/SEC ***
+*** PROGRAM EXECUTION BEGINNING - ANY OUTPUT BEFORE EXECUTION TIME MESSAGE IS PRODUCED BY USER PROGRAM ***
+    WOLFGANG AMADEUS MOZART      12345               15          80          25         500        1675         301             1374
+    RICHARD STRAUSS              23456               19          80           0          10        1530         275             1255
+    AMY BEACH                    22132               10          80          31         200         969         174              795
+    DAME ETHEL SMYTHE            65465               22          80          15         900        2645         476             2169
+    PETER ILYICH TCHAIKOVSKY     44560               23          28          34          70         680         122              558
+    ANTON BRUCKNER               99870               22          80          21           0        1739         313             1426
+    LUDWIG VAN BEETHOVEN         13345               15          80          25         500        1675         301             1374
+    JOHANNES BRAHMS              24456               19          80           0          10        1530         275             1255
+    BELA BARTOK                  22532               10          80          31         200         969         174              795
+    MAX REGER                    11465               22          80          15         900        2645         476             2169
+    SAMUEL BARBER                13360               23          28          34          70         680         122              558
+    GIUSEPPE VERDI               99873               22          80          21           0        1739         313             1426
+    JOHANN SEBASTIAN BACH        12342               15          80          25         500        1675         301             1374
+    JOSEPH HAYDN                 23452               19          80           0          10        1530         275             1255
+    GEORG FRIEDRICH HANDEL       22131               10          80          31         200         969         174              795
+    EDWARD ELGAR                 65411               22          80          15         900        2645         476             2169
+    NIKOLAI RIMSKY-KORSAKOV      44378               23          28          34          70         680         122              558
+    CLAUDE DEBUSSY               99855               22          80          21           0        1739         313             1426
+    ANTONIN DVORAK               13346               15          80          25         500        1675         301             1374
+    THOMAS TALLIS                24457               19          80           0          10        1530         275             1255
+    RALPH VAUGHAN WILLIAMS       22538               10          80          31         200         969         174              795
+    RICHARD WAGNER               11477               22          80          15         900        2645         476             2169
+    FREDERIC CHOPIN              17777               23          28          34          70         680         122              558
+    JOAN TOWER                   99211               22          80          21           0        1739         313             1426
+                          TOTAL EMPLOYEE COUNT:           24
+                          TOTAL DEDUCTIONS:           22
+                          TOTAL BONUSES:           22
+                          TOTAL GROSS PAY:        36952
+                          TOTAL WITHHOLDING:          313
+                          TOTAL NET PAY:        30308
+*** EXECUTION TIME =    0.000 SECS.       788 INSTRUCTIONS EXECUTED -   788000 INSTRUCTIONS/SEC ***
+*** AM004 - NORMAL USER TERMINATION BY RETURN ***
