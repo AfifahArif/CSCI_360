@@ -1,0 +1,35 @@
+//KC03D76A JOB ,'AFIFHA ARIF' ,MSGCLASS=H                               00010000
+//STEP1 EXEC PGM=ASSIST                                                 00020000
+//STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        00030000
+//SYSPRINT DD SYSOUT=*                                                  00040000
+//SYSIN DD *                                                            00050000
+***                                                                     00060000
+* ASSIGN2                                                               00070000
+* NAME: AFIFAH ARIF                                                     00080000
+* REGISTER USAGE                                                        00090000
+*     2 - FIRST NUMBER     --|ADD  REGISTERS                            00100001
+*     3 - SECOND NUMBER    --|                                          00110001
+*     4 - FIRST NUMBER     --|SUBTRACT REGISTERS                        00111003
+*     5 - SECOND NUMBER    --|                                          00112003
+*    15 - BASE REGISTER                                                 00120000
+***                                                                     00130000
+MAIN     CSECT                                                          00140000
+         USING MAIN,15     SAME AS ASSIGN1B                             00150000
+         L     2,44(15)    EXCEPT EXPLICIT                              00160006
+         L     3,48(15)    ADDRESSING ADDED                             00170006
+         AR    2,3                                                      00180000
+         ST    2,52(15)                                                 00180106
+         L     4,44(15)                                                 00180206
+         L     5,48(15)                                                 00180306
+         SR    5,4                                                      00180401
+         ST    5,56(15)                                                 00180506
+         XDUMP SUM,4                                                    00181004
+         XDUMP DIFF,4                                                   00181104
+         BR    14                                                       00182001
+FIRST    DC    F'219'                                                   00190000
+SECOND   DC    F'83'                                                    00200000
+SUM      DS    F                                                        00200105
+DIFF     DS    F                                                        00200205
+         END   MAIN                                                     00201002
+/*                                                                      00210000
+//                                                                      00220000

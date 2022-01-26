@@ -1,0 +1,81 @@
+1                   J E S 2  J O B  L O G  --  S Y S T E M  2 9 6 4  --  N O D E  S V S C J E S 2        
+0 
+ 18.00.17 JOB08835 ---- SUNDAY,    02 FEB 2020 ----
+ 18.00.17 JOB08835  IRR010I  USERID KC03D76  IS ASSIGNED TO THIS JOB.
+ 18.00.17 JOB08835  ICH70001I KC03D76  LAST ACCESS AT 17:59:01 ON SUNDAY, FEBRUARY 2, 2020
+ 18.00.18 JOB08835  $HASP373 KC03D76A STARTED - INIT 2    - CLASS A        - SYS 2964
+ 18.00.18 JOB08835  -                                      -----TIMINGS (MINS.)------                          -----PAGING COUNTS-
+ 18.00.18 JOB08835  -STEPNAME PROCSTEP    RC   EXCP   CONN       TCB       SRB  CLOCK          SERV  WORKLOAD  PAGE  SWAP   VIO SW
+ 18.00.18 JOB08835  -STEP1                00     22      3       .00       .00     .0             5  BATCH        0     0     0   
+ 18.00.18 JOB08835  -KC03D76A ENDED.  NAME-AFIFHA ARIF          TOTAL TCB CPU TIME=      .00 TOTAL ELAPSED TIME=    .0
+ 18.00.18 JOB08835  $HASP395 KC03D76A ENDED - RC=0000
+0------ JES2 JOB STATISTICS ------
+-  02 FEB 2020 JOB EXECUTION DATE
+-           29 CARDS READ
+-           85 SYSOUT PRINT RECORDS
+-            0 SYSOUT PUNCH RECORDS
+-           10 SYSOUT SPOOL KBYTES
+-         0.00 MINUTES EXECUTION TIME
+         1 //KC03D76A JOB ,'AFIFHA ARIF' ,MSGCLASS=H                               JOB08835
+         2 //STEP1 EXEC PGM=ASSIST                                                 00020000
+         3 //STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        00030000
+         4 //SYSPRINT DD SYSOUT=*                                                  00040000
+         5 //SYSIN DD *                                                            00050000
+ ICH70001I KC03D76  LAST ACCESS AT 17:59:01 ON SUNDAY, FEBRUARY 2, 2020
+ IEFA111I KC03D76A IS USING THE FOLLOWING JOB RELATED SETTINGS:
+          SWA=ABOVE,TIOT SIZE=32K,DSENQSHR=DISALLOW,GDGBIAS=JOB
+ IEF236I ALLOC. FOR KC03D76A STEP1
+ IGD103I SMS ALLOCATED TO DDNAME STEPLIB
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IEF237I JES2 ALLOCATED TO SYSIN
+ IEF142I KC03D76A STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IGD104I KC02293.ASSIST.LOADLIB                       RETAINED,  DDNAME=STEPLIB 
+ IEF285I   KC03D76.KC03D76A.JOB08835.D0000102.?         SYSOUT        
+ IEF285I   KC03D76.KC03D76A.JOB08835.D0000101.?         SYSIN         
+ IEF373I STEP/STEP1   /START 2020033.1800
+ IEF032I STEP/STEP1   /STOP  2020033.1800 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+         VIRT:   584K  SYS:   244K  EXT:        0K  SYS:    12280K
+         ATB- REAL:                  4116K  SLOTS:                     0K
+              VIRT- ALLOC:      11M SHRD:       0M
+ IEF375I  JOB/KC03D76A/START 2020033.1800
+ IEF033I  JOB/KC03D76A/STOP  2020033.1800 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+1*** ASSIST 4.0/A2-05/15/82  470/V7A/0:OS/VS2  INS=SDFP7/X=BGHO, CHECK/TRC/=1180, OPTS=CDKMPR FROM PENN ST*NIU COMPSCI*LT         
+0                                                                                                                                 
+0                                                                                                               PAGE    1         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                       1 ***                                                                     00060000         
+                                       2 * ASSIGN2                                                               00070000         
+                                       3 * NAME: AFIFAH ARIF                                                     00080000         
+                                       4 * REGISTER USAGE                                                        00090000         
+                                       5 *     2 - FIRST NUMBER     --|ADD  REGISTERS                            00100001         
+                                       6 *     3 - SECOND NUMBER    --|                                          00110001         
+                                       7 *     4 - FIRST NUMBER     --|SUBTRACT REGISTERS                        00111001         
+                                       8 *     5 - SECOND NUMBER    --|                                          00112001         
+                                       9 *    15 - BASE REGISTER                                                 00120000         
+                                      10 ***                                                                     00130000         
+ 000000                               11 MAIN     CSECT                                                          00140000         
+ 000000                               12          USING MAIN,15                                                  00150000         
+ 000000 5820 F01C            0001C    13          L     2,FIRST                                                  00160000         
+ 000004 5830 F020            00020    14          L     3,SECOND                                                 00170000         
+ 000008 1A23                          15          AR    2,3                                                      00180000         
+ 00000A 5840 F01C            0001C    16          L     4,FIRST                                                  00180101         
+ 00000E 5850 F020            00020    17          L     5,SECOND                                                 00180201         
+ 000012 1B54                          18          SR    5,4                                                      00180301         
+ 000014 E160 0000 0000 00000          19          XDUMP                                                          00181000         
+ 00001A 07FE                          20          BR    14                                                       00182001         
+ 00001C 000000DB                      21 FIRST    DC    F'219'                                                   00190000         
+ 000020 00000053                      22 SECOND   DC    F'83'                                                    00200000         
+                                      23          END   MAIN                                                     00201002         
+0***  NO   STATEMENTS FLAGGED -  NO   WARNINGS,  NO   ERRORS                                                                      
+0*** DYNAMIC CORE AREA USED:  LOW:     620 HIGH:     360 LEAVING:  492588 FREE BYTES. AVERAGE:       40 BYTES/STMT ***            
+0*** ASSEMBLY TIME =    0.000 SECS,    24000 STATEMENTS/SEC ***                                                                   
+0*** PROGRAM EXECUTION BEGINNING - ANY OUTPUT BEFORE EXECUTION TIME MESSAGE IS PRODUCED BY USER PROGRAM ***                       
+0BEGIN XSNAP - CALL     1 AT D000001A USER REGISTERS                                                                              
+0 REGS 0-7      F4F4F4F4    F4F4F4F4    0000012E    00000053    000000DB    FFFFFF78    F4F4F4F4    F4F4F4F4                      
+  REGS 8-15     F4F4F4F4    F4F4F4F4    F4F4F4F4    F4F4F4F4    F4F4F4F4    00000028    FFFE7960    00000000                      
+0                                                                                                                                 
+0*** EXECUTION TIME =    0.000 SECS.         8 INSTRUCTIONS EXECUTED -     8000 INSTRUCTIONS/SEC ***                              
+0*** FIRST CARD NOT READ: NO CARDS READ:FILE UNOPENED                                                                             
+0*** AM004 - NORMAL USER TERMINATION BY RETURN ***                                                                                

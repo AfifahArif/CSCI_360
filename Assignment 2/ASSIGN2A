@@ -1,0 +1,30 @@
+//KC03D76A JOB ,'AFIFHA ARIF' ,MSGCLASS=H                               00010000
+//STEP1 EXEC PGM=ASSIST                                                 00020000
+//STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        00030000
+//SYSPRINT DD SYSOUT=*                                                  00040000
+//SYSIN DD *                                                            00050000
+***                                                                     00060000
+* ASSIGN2                                                               00070000
+* NAME: AFIFAH ARIF                                                     00080000
+* REGISTER USAGE                                                        00090000
+*     2 - FIRST NUMBER     --|ADD  REGISTERS                            00100001
+*     3 - SECOND NUMBER    --|                                          00110001
+*     4 - FIRST NUMBER     --|SUBTRACT REGISTERS                        00111003
+*     5 - SECOND NUMBER    --|                                          00112003
+*    15 - BASE REGISTER                                                 00120000
+***                                                                     00130000
+MAIN     CSECT                                                          00140000
+         USING MAIN,15                                                  00150000
+         L     2,FIRST     LOAD THE FIRST NUMBER                        00160000
+         L     3,SECOND    LOAD THE SECOND NUMBER                       00170000
+         AR    2,3         ADD REGISTERS 2 AND 3                        00180000
+         L     4,FIRST     LOAD THE FIRST NUMBER                        00180101
+         L     5,SECOND    LOAD THE SECOND NUMBER                       00180201
+         SR    5,4         SUBTRACT REGISTER 5 FROM 4                   00180301
+         XDUMP             DUMP OUT REGISTERS                           00181000
+         BR    14                                                       00182001
+FIRST    DC    F'219'      FULLWORD                                     00190000
+SECOND   DC    F'83'       FULLWORD                                     00200000
+         END   MAIN                                                     00201002
+/*                                                                      00210000
+//                                                                      00220000
