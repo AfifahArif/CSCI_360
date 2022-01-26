@@ -1,0 +1,32 @@
+//KC03D76A JOB ,'AFIFHA ARIF' ,MSGCLASS=H                               00010000
+//STEP1 EXEC PGM=ASSIST                                                 00020000
+//STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        00030000
+//SYSPRINT DD SYSOUT=*                                                  00040000
+//SYSIN DD *                                                            00050000
+***                                                                     00060000
+* ASSIGN4                                                               00070000
+* NAME: AFIFAH ARIF                                                     00080000
+* REGISTER USAGE:                                                       00090000
+*    2 - TOTAL                                                          00100000
+*    6 - COUNTER                                                        00110000
+*    15 - BASE REGISTER                                                 00111000
+***                                                                     00120000
+DEBUG1   CSECT                                                          00130001
+         USING DEBUG1,15    ESTABLISH A BASE REGISTER                   00140001
+         L     3,FIRST      LOAD A NUMBER INTO REGISTER 2               00150001
+         L     4,SECOND     LOAD ANOTHER NUMBER INTO REGISTER 4         00160001
+         SR    3,4          ADD THE TWO NUMBERS                         00170001
+         LA    5,THIRD      REGISTER 5 WILL = ADDRESS OF THIRD          00180001
+         L     6,CONST      PUT CONST'S VALUE IN REGISTER 6             00190001
+         ST    3,0(5,6)     STORE THE RESULT                            00200001
+         XDUMP FOURTH,4     DUMP THE RESULT                             00210001
+         SR    6,6          SET REGISTER 6 TO 0                         00211002
+         BCR   B'1111',14   RETURN TO CALLER                            00212002
+* THIS IS A COMMENT LINE.                                               00220001
+NOTE     DC    CL19'STORAGE STARTS HERE'                                00230001
+CONST    DC    F'2'         A CONSTANT = 2                              00240001
+FIRST    DC    F'193'       A NUMBER                                    00250001
+SECOND   DC    F'89'        ANOTHER NUMBER                              00260001
+THIRD    DS    XL4'00'      YET ANOTHER NUMBER                          00270001
+FOURTH   DS    F            DIFFERENCE OF FIRST AND SECOND              00280001
+         END   DEBUG1       PROGRAM ENDS HERE                           00290001
