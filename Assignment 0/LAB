@@ -1,0 +1,22 @@
+//KC03D76A JOB ,'AFIFHA ARIF' ,MSGCLASS=H                               00010000
+//STEP1 EXEC PGM=ASSIST                                                 00020000
+//STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        00030000
+//SYSPRINT DD SYSOUT=*                                                  00040000
+//SYSIN DD *                                                            00050000
+***                                                                     00060000
+* LAB                                                                   00070000
+* NAME: AFIFAH ARIF                                                     00080000
+* REGISTER USAGE:                                                       00090000
+*    2 - TOTAL                                                          00100000
+*    6 - COUNTER                                                        00110000
+*    15 - BASE REGISTER                                                 00111000
+***                                                                     00120000
+MAIN     CSECT                                                          00130000
+         USING MAIN,15                                                  00140000
+         SR    1,4      TOTAL = ZERO                                    00150000
+         SR    1,4      COUNTER = ZERO                                  00160000
+         XDUMP                                                          00170000
+         BR    14                                                       00180000
+         END   MAIN                                                     00190000
+/*                                                                      00200000
+//                                                                      00210000

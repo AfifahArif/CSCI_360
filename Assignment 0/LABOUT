@@ -1,0 +1,73 @@
+1                   J E S 2  J O B  L O G  --  S Y S T E M  2 9 6 4  --  N O D E  S V S C J E S 2        
+0 
+ 15.50.14 JOB03903 ---- WEDNESDAY, 15 JAN 2020 ----
+ 15.50.14 JOB03903  IRR010I  USERID KC03D76  IS ASSIGNED TO THIS JOB.
+ 15.50.15 JOB03903  ICH70001I KC03D76  LAST ACCESS AT 15:39:54 ON WEDNESDAY, JANUARY 15, 2020
+ 15.50.15 JOB03903  $HASP373 KC03D76A STARTED - INIT 2    - CLASS A        - SYS 2964
+ 15.50.15 JOB03903  -                                      -----TIMINGS (MINS.)------                          -----PAGING COUNTS-
+ 15.50.15 JOB03903  -STEPNAME PROCSTEP    RC   EXCP   CONN       TCB       SRB  CLOCK          SERV  WORKLOAD  PAGE  SWAP   VIO SW
+ 15.50.15 JOB03903  -STEP1                00     21      3       .00       .00     .0             4  BATCH        0     0     0   
+ 15.50.15 JOB03903  -KC03D76A ENDED.  NAME-AFIFHA ARIF          TOTAL TCB CPU TIME=      .00 TOTAL ELAPSED TIME=    .0
+ 15.50.15 JOB03903  $HASP395 KC03D76A ENDED - RC=0000
+0------ JES2 JOB STATISTICS ------
+-  15 JAN 2020 JOB EXECUTION DATE
+-           21 CARDS READ
+-           77 SYSOUT PRINT RECORDS
+-            0 SYSOUT PUNCH RECORDS
+-            9 SYSOUT SPOOL KBYTES
+-         0.00 MINUTES EXECUTION TIME
+         1 //KC03D76A JOB ,'AFIFHA ARIF' ,MSGCLASS=H                               JOB03903
+         2 //STEP1 EXEC PGM=ASSIST                                                 00020000
+         3 //STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        00030000
+         4 //SYSPRINT DD SYSOUT=*                                                  00040000
+         5 //SYSIN DD *                                                            00050000
+ ICH70001I KC03D76  LAST ACCESS AT 15:39:54 ON WEDNESDAY, JANUARY 15, 2020
+ IEFA111I KC03D76A IS USING THE FOLLOWING JOB RELATED SETTINGS:
+          SWA=ABOVE,TIOT SIZE=32K,DSENQSHR=DISALLOW,GDGBIAS=JOB
+ IEF236I ALLOC. FOR KC03D76A STEP1
+ IGD103I SMS ALLOCATED TO DDNAME STEPLIB
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IEF237I JES2 ALLOCATED TO SYSIN
+ IEF142I KC03D76A STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IGD104I KC02293.ASSIST.LOADLIB                       RETAINED,  DDNAME=STEPLIB 
+ IEF285I   KC03D76.KC03D76A.JOB03903.D0000102.?         SYSOUT        
+ IEF285I   KC03D76.KC03D76A.JOB03903.D0000101.?         SYSIN         
+ IEF373I STEP/STEP1   /START 2020015.1550
+ IEF032I STEP/STEP1   /STOP  2020015.1550 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+         VIRT:   584K  SYS:   244K  EXT:        0K  SYS:    12268K
+         ATB- REAL:                  4116K  SLOTS:                     0K
+              VIRT- ALLOC:      11M SHRD:       0M
+ IEF375I  JOB/KC03D76A/START 2020015.1550
+ IEF033I  JOB/KC03D76A/STOP  2020015.1550 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+1*** ASSIST 4.0/A2-05/15/82  470/V7A/0:OS/VS2  INS=SDFP7/X=BGHO, CHECK/TRC/=1180, OPTS=CDKMPR FROM PENN ST*NIU COMPSCI*LT         
+0                                                                                                                                 
+0                                                                                                               PAGE    1         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                       1 ***                                                                     00060000         
+                                       2 * LAB                                                                   00070000         
+                                       3 * NAME: AFIFAH ARIF                                                     00080000         
+                                       4 * REGISTER USAGE:                                                       00090000         
+                                       5 *    2 - TOTAL                                                          00100000         
+                                       6 *    6 - COUNTER                                                        00110000         
+                                       7 *    15 - BASE REGISTER                                                 00111000         
+                                       8 ***                                                                     00120000         
+ 000000                                9 MAIN     CSECT                                                          00130000         
+ 000000                               10          USING MAIN,15                                                  00140000         
+ 000000 1B14                          11          SR    1,4      TOTAL = ZERO                                    00150000         
+ 000002 1B14                          12          SR    1,4      COUNTER = ZERO                                  00160000         
+ 000004 E160 0000 0000 00000          13          XDUMP                                                          00170000         
+ 00000A 07FE                          14          BR    14                                                       00180000         
+                                      15          END   MAIN                                                     00190000         
+0***  NO   STATEMENTS FLAGGED -  NO   WARNINGS,  NO   ERRORS                                                                      
+0*** DYNAMIC CORE AREA USED:  LOW:     348 HIGH:     320 LEAVING:  492900 FREE BYTES. AVERAGE:       41 BYTES/STMT ***            
+0*** ASSEMBLY TIME =    0.000 SECS,    16000 STATEMENTS/SEC ***                                                                   
+0*** PROGRAM EXECUTION BEGINNING - ANY OUTPUT BEFORE EXECUTION TIME MESSAGE IS PRODUCED BY USER PROGRAM ***                       
+0BEGIN XSNAP - CALL     1 AT E000000A USER REGISTERS                                                                              
+0 REGS 0-7      F4F4F4F4    0B0B0B0C    F4F4F4F4    F4F4F4F4    F4F4F4F4    F4F4F4F4    F4F4F4F4    F4F4F4F4                      
+  REGS 8-15     F4F4F4F4    F4F4F4F4    F4F4F4F4    F4F4F4F4    F4F4F4F4    00000010    FFFE7960    00000000                      
+0                                                                                                                                 
+0*** EXECUTION TIME =    0.000 SECS.         4 INSTRUCTIONS EXECUTED -     4000 INSTRUCTIONS/SEC ***                              
+0*** FIRST CARD NOT READ: NO CARDS READ:FILE UNOPENED                                                                             
+0*** AM004 - NORMAL USER TERMINATION BY RETURN ***                                                                                
