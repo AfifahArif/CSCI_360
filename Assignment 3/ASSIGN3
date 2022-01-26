@@ -1,0 +1,93 @@
+//KC03D76A JOB ,'AFIFAH',MSGCLASS=H                                     00010002
+//STEP1    EXEC  PGM=ASSIST                                             00020002
+//STEPLIB    DD  DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                    00030002
+//SYSPRINT   DD  SYSOUT=*                                               00040002
+//SYSIN      DD  *                                                      00050002
+***                                                                     00060006
+* ASSIGN3                                                               00061006
+* NAME: AFIFAH ARIF                                                     00062006
+* REGISTER USAGE:                                                       00070006
+*    1        USED BY XDECI                                             00080002
+*    2        W                                                         00090002
+*    3        X                                                         00100002
+*    4        Y                                                         00110002
+*    5        Z                                                         00120002
+*    6        COUNTER                                                   00130006
+*    7        RESULT                                                    00140006
+*    8        SUM                                                       00150002
+*   15        BASE REGISTER                                             00160002
+***                                                                     00170006
+ASSIGN3  CSECT                                                          00180006
+         USING ASSIGN3,15                                               00190006
+         SR    6,6              SET COUNTER TO 0                        00191006
+         SR    7,7              SET RESULT TO 0                         00200006
+         SR    8,8              SET SUM TO 0                            00210006
+LOOP     XREAD BUFFER,80        START READING                           00220006
+         BC    B'0100',ENDLOOP  IF EOF, END PROGRAM                     00230006
+         A     6,=F'1'          ADD ONE TO LINE COUNTER                 00240006
+         XDECI 2,BUFFER         PLACE W IN REG 2                        00250006
+         XDECI 3,0(1)           PLACE X IN REG 3                        00260006
+         XDECI 4,0(1)           PLACE Y IN REG 4                        00270006
+         XDECI 5,0(1)           PLACE Z IN REG 5                        00280006
+         LR    7,5              LOAD Z TO RESULT REG                    00290014
+         SR    7,4              SUBTRACT Y FROM RESULT                  00300014
+         SR    7,3              SUBTRACT X FROM RESULT                  00310014
+         AR    7,2              ADD W TO RESULT                         00320014
+         AR    8,7              ADD RESULT TO SUM                       00330006
+         XDECO 2,W              STORE W IN PRINT FORM                   00340006
+         XDECO 3,X              STORE X IN PRINT FORM                   00350006
+         XDECO 4,Y              STORE Y IN PRINT FORM                   00360006
+         XDECO 5,Z              STORE Z IN PRINT FORM                   00370006
+         XDECO 7,RESULT         STORE RESULT IN PRINT FORM              00380006
+         XPRNT LINE,120         PRINT LINES                             00390006
+         BC    B'1111',LOOP     GO TO TOP OF LOOP                       00400006
+ENDLOOP  XDECO 6,NUMLINES       STORE COUNTER IN PRINT FORM             00410006
+         XDECO 8,SUM            STORE SUM IN PRINT FORM                 00420006
+         XPRNT ENDLINE,70       PRINT LINE END                          00430011
+         BR    14               END PROGRAM                             00440006
+LINE     DC    C' '             BEGINNING OF LINE                       00460010
+         DC    CL3'W ='                                                 00470002
+W        DS    CL12             W VALUE                                 00490010
+         DC    CL8' '           SPACE                                   00500010
+         DC    CL3'X ='                                                 00510002
+X        DS    CL12             X VALUE                                 00520010
+         DC    CL8' '           SPACE                                   00530010
+         DC    CL3'Y ='                                                 00540002
+Y        DS    CL12             Y VALUE                                 00550010
+         DC    CL8' '           SPACE                                   00560010
+         DC    CL3'Z ='                                                 00570002
+Z        DS    CL12             Z VALUE                                 00580010
+         DC    CL8' '           SPACE                                   00590010
+         DC    CL8'RESULT ='                                            00600012
+RESULT   DS    CL12             RESULT VALUE                            00610012
+ENDLINE  DC    C' '             END                                     00620010
+         DC    CL17'NUMBER OF LINES ='                                  00630002
+NUMLINES DS    CL12             NUMLINES VALUE                          00640010
+         DC    CL8' '           SPACE                                   00650010
+         DC    CL16'SUM OF RESULTS ='                                   00660002
+SUM      DS    CL12             SUM VALUE                               00670010
+BUFFER   DS    0C               BUFFER                                  00680010
+         END   ASSIGN3          END OF ASSIGN3                          00690010
+/*                                                                      00700002
+//FT05F001   DD  *                                                      00710015
+   005   005   005   005                                                00720002
+   001   002   004   006                                                00730002
+    +7     2   -45     0                                                00740002
+   088   035    10   100                                                00750002
+     0     0     0     0                                                00760002
+   -10    10   -10    10                                                00770002
+   230     9    58   500                                                00780002
+   853     0    17   516                                                00790002
+     0   245   316   020                                                00800002
+   977   681     0   529                                                00810002
+   250    85   831   013                                                00820002
+   364   275     0     0                                                00830002
+   100   293   993   887                                                00840002
+   447   591    13   234                                                00850002
+    -7    23   104   -89                                                00860002
+   002   003   004   001                                                00870002
+   007   006   005   008                                                00880002
+   998   997   996   999                                                00890002
+/*  /                                                                   00900002
+//FT05F001   DD SYSOUT=*                                                00910013
+//                                                                      00920002
