@@ -1,0 +1,123 @@
+                   J E S 2  J O B  L O G  --  S Y S T E M  2 9 6 4  --  N O D E  S V S C J E S 2
+ 
+00.39.50 JOB01798 ---- FRIDAY, 21 FEB 2020 ----
+00.39.50 JOB01798  IRR010I  USERID KC03D76 IS ASSIGNED TO THIS JOB.
+00.39.50 JOB01798  ICH70001I KC03D76 LAST ACCESS AT 00:25:58 ON FRIDAY, FEBRUARY 21, 2020
+00.39.50 JOB01798  $HASP373 KC03D76A STARTED - INIT 2    - CLASS A        - SYS 2964
+00.39.50 JOB01798  $HASP395 KC03D76A ENDED - RC=0000
+------ JES2 JOB STATISTICS ------
+  04 JUL 2020 JOB EXECUTION DATE
+           41 CARDS READ
+           93 SYSOUT PRINT RECORDS
+            0 SYSOUT PUNCH RECORDS
+           10 SYSOUT SPOOL KBYTES
+         0.00 MINUTES EXECUTION TIME
+        1 //KC03D76A JOB ,'AFIFAH ARIF',MSGCLASS=H                                JOB01798
+        2 //JSTEP01  EXEC PGM=ASSIST
+        3 //STEPLIB  DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        
+        4 //SYSPRINT DD SYSOUT=*
+        5 //SYSIN    DD *
+        6 //
+ICH70001I KC03D76 LAST ACCESS AT 00:25:58 ON FRIDAY, FEBRUARY 21, 2020
+IEFA111I KC03D76A IS USING THE FOLLOWING JOB RELATED SETTINGS:
+         SWA=ABOVE,TIOT SIZE=32K,DSENQSHR=DISALLOW,GDGBIAS=JOB
+IEF236I ALLOC. FOR KC03D76A JSTEP01
+IGD103I SMS ALLOCATED TO DDNAME STEPLIB
+IEF237I JES2 ALLOCATED TO SYSPRINT
+IEF237I JES2 ALLOCATED TO SYSIN
+IEF142I KC03D76A JSTEP01 - STEP WAS EXECUTED - COND CODE 0000
+IGD104I KC02293.ASSIST.LOADLIB                       RETAINED,  DDNAME=STEPLIB
+IEF285I   KC03D76.KC03D76A.JOB08835.D0000103.?         SYSOUT
+IEF285I   KC03D76.KC03D76A.JOB08835.D0000101.?         SYSIN
+IEF373I STEP/JSTEP01 /START 2020186.0039
+IEF032I STEP/JSTEP01 /STOP  2020186.0039
+        CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+        VIRT:   584K  SYS:   244K  EXT:        0K  SYS:    12180K
+        ATB- REAL:                  1056K  SLOTS:                     0K
+             VIRT- ALLOC:      13M SHRD:       0M
+IEF375I  JOB/KC03D76A/START 2020186.0039
+IEF033I  JOB/KC03D76A/STOP  2020186.0039
+        CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC
+******************************************************************
+*                                                                *
+*  CSCI 360               ASSIGNMENT 5              SPRING 2020  *
+*                                                                *
+*  DATE DUE:  02/22/2020                                         *
+*  TIME DUE:  11:59 PM                                           *
+*                                                                *
+******************************************************************
+*
+*        COL. 10
+*        |     COL. 16
+*        |     |
+*        v     v
+ASSIGN5B CSECT
+         USING ASSIGN5B,15     ESTABLISH ADDRESSABILITY ON REG 15
+         L     4,FIRST         LOAD FIRST VAR INTO REG 4
+         L     5,SECOND        LOAD SECOND VAR INTO REG 5
+         SR    4,5             SUBTRACT SECOND FROM FIRST & PUT IN R4
+         ST    4,ANSWER1       STORE CONTENTS OF REG 4 IN ANSWER1 VAR
+         L     6,FIRST         LOAD FIRST VAR INTO REG 6
+         L     7,SECOND        LOAD SECOND VAR INTO REG 7
+         AR    6,7             ADD SECOND TO FIRST AND PUT IN REG 6
+         ST    6,ANSWER2       STORE CONTENTS OF REG 6 IN ANSWER2 VAR
+         XDUMP ANSWER1,8
+         BCR   B'1111',14
+*
+         LTORG                 LITERAL ORGANIZATION
+*
+FIRST    DC    F'97'           FULLWORD VARIABLE
+SECOND   DC    F'33'           FULLWORD VARIABLE
+ANSWER1  DS    F               FULLWORD VARIABLE
+ANSWER2  DS    F               FULLWORD VARIABLE
+*
+         END   ASSIGN5B        END PROGRAM
+*** ASSIST 4.0/A2-05/15/82  470/V7A/0:OS/VS2  INS=SDFP7/X=BGHO, CHECK/TRC/=1180, OPTS=CDKMPR FROM PENN ST*NIU COMPSCI*LT
+ 
+                                                                                                               PAGE    1
+  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT
+                                      1 ******************************************************************
+                                      2 *                                                                *
+                                      3 *  CSCI 360               ASSIGNMENT 5              SPRING 2020  *
+                                      4 *                                                                *
+                                      5 *  DATE DUE:  02/22/2020                                         *
+                                      6 *  TIME DUE:  11:59 PM                                           *
+                                      7 *                                                                *
+                                      8 ******************************************************************
+                                      9 *
+                                     10 *        COL. 10
+                                     11 *        |     COL. 16
+                                     12 *        |     |
+                                     13 *        v     v
+000000                               14 ASSIGN5B CSECT
+000000                               15          USING ASSIGN5B,15     ESTABLISH ADDRESSABILITY ON REG 15
+000000 5840 F028            00028    16          L     4,FIRST         LOAD FIRST VAR INTO REG 4
+000004 5850 F02C            0002C    17          L     5,SECOND        LOAD SECOND VAR INTO REG 5
+000008 1B45                          18          SR    4,5             SUBTRACT SECOND FROM FIRST & PUT IN R4
+00000A 5040 F030            00030    19          ST    4,ANSWER1       STORE CONTENTS OF REG 4 IN ANSWER1 VAR
+00000E 5860 F028            00028    20          L     6,FIRST         LOAD FIRST VAR INTO REG 6
+000012 5870 F02C            0002C    21          L     7,SECOND        LOAD SECOND VAR INTO REG 7
+000016 1A67                          22          AR    6,7             ADD SECOND TO FIRST AND PUT IN REG 6
+000018 5060 F034            00034    23          ST    6,ANSWER2       STORE CONTENTS OF REG 6 IN ANSWER2 VAR
+00001C E060 F030 0008 00030          24          XDUMP ANSWER1,8
+000022 07FE                          25          BCR   B'1111',14
+                                     26 *
+                                     27          LTORG                 LITERAL ORGANIZATION
+                                     28 *
+000028 00000061                      29 FIRST    DC    F'97'           FULLWORD VARIABLE
+00002C 00000021                      30 SECOND   DC    F'33'           FULLWORD VARIABLE
+000030                               31 ANSWER1  DS    F               FULLWORD VARIABLE
+000034                               32 ANSWER2  DS    F               FULLWORD VARIABLE
+                                     33 *
+                                     34          END   ASSIGN5B        END PROGRAM
+***  NO   STATEMENTS FLAGGED -  NO   WARNINGS,  NO   ERRORS
+*** DYNAMIC CORE AREA USED:  LOW:    1268 HIGH:     428 LEAVING:  491872 FREE BYTES. AVERAGE:       48 BYTES/STMT ***
+*** ASSEMBLY TIME =    0.000 SECS,    35000 STATEMENTS/SEC ***
+*** PROGRAM EXECUTION BEGINNING - ANY OUTPUT BEFORE EXECUTION TIME MESSAGE IS PRODUCED BY USER PROGRAM ***
+BEGIN XSNAP - CALL     1 AT E0000022 USER STORAGE
+                             CORE ADDRESSES SPECIFIED-     000030 TO 000038
+000020   000807FE F5F5F5F5 00000061 00000021    00000040 00000082 F5F5F5F5 00000000   *....5555........... ....5555....*
+ 
+*** EXECUTION TIME =    0.000 SECS.        10 INSTRUCTIONS EXECUTED -    10000 INSTRUCTIONS/SEC ***
+*** FIRST CARD NOT READ: NO CARDS READ:FILE UNOPENED
+*** AM004 - NORMAL USER TERMINATION BY RETURN ***
